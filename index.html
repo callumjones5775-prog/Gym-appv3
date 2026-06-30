@@ -2,8 +2,17 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>Gym Coach</title>
+
+  <!-- Add to Home Screen / PWA -->
+  <link rel="manifest" href="manifest.json" />
+  <meta name="theme-color" content="#0e1116" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <meta name="apple-mobile-web-app-title" content="Gym Coach" />
+  <link rel="apple-touch-icon" href="icon-180.png" />
+
   <link rel="stylesheet" href="css/style.css" />
 </head>
 <body>
@@ -11,14 +20,19 @@
 
   <!-- Load order matters: classic scripts share global scope. -->
   <script src="js/storage.js"></script>
+  <script src="js/exercises.js"></script>
   <script src="js/workout.js"></script>
   <script src="js/rpe.js"></script>
   <script src="js/state.js"></script>
   <script src="js/stats.js"></script>
   <script src="js/ui.js"></script>
   <script>
-    // Boot the app once everything is defined.
     render();
+    if ("serviceWorker" in navigator) {
+      window.addEventListener("load", function () {
+        navigator.serviceWorker.register("sw.js").catch(function () {});
+      });
+    }
   </script>
 </body>
 </html>
